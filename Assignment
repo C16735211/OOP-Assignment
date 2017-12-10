@@ -1,0 +1,131 @@
+import controlP5.*;
+import processing.sound.*;
+
+ControlP5 cp5;
+
+int myColorBackground = color(0, 0, 0);
+Star[] stars = new Star[800];
+Planet sun;
+
+PImage sunTexture;
+PImage[] textures = new PImage[3];
+
+float speed;
+
+RadioButton r1, r2, r3;
+
+
+void setup()
+{
+  size(700, 500, P3D);
+  sunTexture = loadImage("sun.jpg");
+  textures[0] = loadImage("earth.jpg");
+  textures[1] = loadImage("mars.jpg");
+  textures[2] = loadImage("mercury.jpg");
+
+  //jControl = new ControlP5(this);
+  sun = new Planet(50, 0, 0, sunTexture);
+  sun.spawnMoons(4, 1);
+
+  radar1 = new Radar(100, 400, 50, 0.5, color(0, 255, 0));
+
+  for (int i = 0; i < stars.length; i++)
+  {
+    stars[i] = new Star();
+  }
+
+  cp5 = new ControlP5(this);
+
+  r1 = cp5.addRadioButton("radioButton")
+    .setPosition(200, 400)
+    .setSize(40, 20)
+    .setColorForeground(color(120))
+    .setColorActive(color(255))
+    .setColorLabel(color(255))
+    .setItemsPerRow(5)
+    .setSpacingColumn(50)
+    .addItem("50", 1)
+    .addItem("100", 2)
+    .addItem("150", 3)
+    .addItem("200", 4)
+    .addItem("250", 5)
+    ;
+
+  for (Toggle t : r1.getItems()) 
+  {
+    t.getCaptionLabel().setColorBackground(color(255, 80));
+    t.getCaptionLabel().getStyle().moveMargin(-7, 0, 0, -3);
+    t.getCaptionLabel().getStyle().movePadding(7, 0, 0, 3);
+    t.getCaptionLabel().getStyle().backgroundWidth = 45;
+    t.getCaptionLabel().getStyle().backgroundHeight = 13;
+  }
+}
+
+Radar radar1;
+
+void draw()
+{
+  speed = map(mouseX, 0, width, 0, 50);
+  background(myColorBackground);
+  radar1.render();
+  radar1.update();
+
+  int z = 100;
+  for (int i = 0; i < 2; i++)
+  {
+    z = -z;
+    pointLight(255, 255, 255, -100, -100, z);
+    pointLight(255, 255, 255, 100, -100, z);
+    pointLight(255, 255, 255, 100, 100, z);
+    pointLight(255, 255, 255, -100, 100, z);
+  }
+
+  for (int i = 0; i < stars.length; i++)
+  {
+    stars[i].update();
+    stars[i].show();
+  }
+  sun.display();
+  sun.orbit();
+}
+
+void keyPressed() 
+{
+  switch(key) {
+    case('0'): 
+    r1.deactivateAll(); 
+    break;
+    case('1'): 
+    r1.activate(0); 
+    break;
+    case('2'): 
+    r1.activate(1); 
+    break;
+    case('3'): 
+    r1.activate(2); 
+    break;
+    case('4'): 
+    r1.activate(3); 
+    break;
+    case('5'): 
+    r1.activate(4); 
+    break;
+  }
+}
+
+void controlEvent(ControlEvent theEvent) 
+{
+  if (theEvent.isFrom(r1)) 
+  {
+    print("got an event from "+theEvent.getName()+"\t");
+    for (int i=0; i<theEvent.getGroup().getArrayValue().length; i++) {
+      print(int(theEvent.getGroup().getArrayValue()[i]));
+    }
+    println("\t "+theEvent.getValue());
+    myColorBackground = color(int(theEvent.getGroup().getValue()*50), 0, 0);
+  }
+}
+
+void radioButton(int a) {
+  println("a radio Button event: "+a);
+}
