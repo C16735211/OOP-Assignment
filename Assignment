@@ -27,7 +27,7 @@ void setup()
   sun = new Planet(50, 0, 0, sunTexture);
   sun.spawnMoons(4, 1);
 
-  radar1 = new Radar(100, 400, 50, 0.5, color(0, 255, 0));
+  radar1 = new Radar(100, 400, 50, 0.5, color(255, 0, 0));
 
   for (int i = 0; i < stars.length; i++)
   {
