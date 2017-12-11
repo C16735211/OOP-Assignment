@@ -15,6 +15,11 @@ int myColorBackground = color(0, 0, 0);
 ArrayList shipCollection;
 Star[] stars = new Star[800];
 Planet sun;
+WaveGraph wave1;
+
+// amount of arcs
+int count = 25;
+Orbiter[] orbiters = new Orbiter[count];
 
 PImage sunTexture;
 PImage chief;
@@ -29,7 +34,7 @@ RadioButton r1, r2, r3;
 
 void setup()
 {
-  size(700, 700, P3D);
+  size(800, 800, P3D);
   minim = new Minim(this);
   player = minim.loadFile("MasterChief.wav");
   player.play();
@@ -43,7 +48,9 @@ void setup()
   sun = new Planet(50, 0, 0, sunTexture);
   sun.spawnMoons(4, 1);
 
-  radar1 = new Radar(100, 600, 50, 0.5, color(255, 0, 0));
+  wave1 = new WaveGraph();
+
+  radar1 = new Radar(100, 600, 50, 0.5, color(0, 255, 0));
 
   for (int i = 0; i < stars.length; i++)
   {
@@ -58,6 +65,16 @@ void setup()
     shipCollection.add(myShip);
   }
 
+  //for orbiter circles -> makes sure radii are evenly divided across the screen
+  float radDiv = min(width, height);
+  //array to initialise the array of orbiter variables
+  for (int i = 1; i<=orbiters.length; i++) 
+  {
+    Orbiter o = new Orbiter(width/8, (height/4)+405, random(360), random(450, 450), radDiv);
+    o.radius = (radDiv * ((float)i/orbiters.length)/8);
+    orbiters[i - 1] = o;
+  }
+
   /* ships
    for (int i = 0; i < ships.length; i++)
    {
@@ -67,9 +84,9 @@ void setup()
 
   cp5 = new ControlP5(this);
 
-  cp5.addTextfield("a").setPosition(300, 550).setSize(100, 25).setAutoClear(false);
+  cp5.addTextfield("Enter command").setPosition(300, 550).setSize(100, 25).setAutoClear(false);
 
-  cp5.addBang("Submit").setPosition(400, 550).setSize(100, 25);
+  cp5.addBang("Enter").setPosition(400, 550).setSize(100, 25);
 
   cp5.addKnob("Hover Control")
     .setRange(0, 500)
@@ -112,7 +129,7 @@ void draw()
   radar1.render();
   radar1.update();
 
-  image(chief, 500, 20);
+  image(chief, 600, 20);
   ellipse(400, 650, player.left.get(1)*800, 50);
 
   int z = 100;
@@ -149,6 +166,13 @@ void draw()
   }
   sun.display();
   sun.orbit();
+  wave1.displayWave();
+
+  noFill();
+  for (Orbiter o : orbiters) {
+    o.update();
+    o.display();
+  }
 }
 
 void keyPressed() 
@@ -201,7 +225,7 @@ void keyPressed()
     player = minim.loadFile("halo.wav");
     player.play();
     break;
-    
+
   case 'b':
     player = minim.loadFile("MasterChief.wav");
     player.play();
@@ -220,11 +244,13 @@ void controlEvent(ControlEvent theEvent)
     println("\t "+theEvent.getValue());
     myColorBackground = color(int(theEvent.getGroup().getValue()*50), 0, 0);
   }
-
+/*
   // changing the value of numberbox1 turns knob1
   if (theEvent.getController().getName()=="numberbox1") {
     cp5.getController("knob1").setValue(theEvent.getController().getValue());
-  }
+   
+   }
+   */
 }
 
 void radioButton(int a) {
@@ -235,7 +261,7 @@ void Submit()
 {
   println();
   print("this is the text you typed :");
-  text = cp5.get(Textfield.class, "a").getText();
+  text = cp5.get(Textfield.class, "Enter Command").getText();
 
   print(text);
 }
@@ -249,4 +275,3 @@ void mouseReleased()
 {
   chief.filter(ERODE);
 }
-
