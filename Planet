@@ -44,7 +44,7 @@ class Planet
     {
       float r = radius/(level*2);
       float d = random((radius + r), (radius+r)*2);
-      float o = random(-0.1, 0.1);
+      float o = random(-0.01, 0.01);
       int index = int(random(0, textures.length));
       planets[i] = new Planet(r, d, o, textures[index]);
       if (level < 2)
