@@ -1,0 +1,27 @@
+class Orbiter
+{
+  float centerX, centerY;
+  float angle;
+  float rotationSpeed;
+  float radius;
+
+  Orbiter(float centerX, float centerY, float startAngle, float rotationSpeed, float radius) 
+  {
+    this.centerX = centerX;
+    this.centerY = centerY;
+    angle = startAngle;
+    this.rotationSpeed = rotationSpeed;
+    this.radius = radius;
+  }
+
+  void update() {
+    angle += rotationSpeed / 60;
+  }
+
+  void display() 
+  {
+    strokeWeight(2);
+    stroke(255, 0, 100);
+    arc(centerX, centerY, radius, radius, radians(angle), radians(angle + 45));
+  }
+}
