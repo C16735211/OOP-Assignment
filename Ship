@@ -1,0 +1,24 @@
+class Ship
+{
+  float x;
+  float y;
+  float c;
+  
+  Ship(float shipx, float shipy, color shipcolor)
+  {
+    x = shipx;
+    y = shipy;
+    c = shipcolor;
+  }
+  
+  void move(int speed)
+  {
+    x = x + speed;
+    if(x > width)
+    {
+      x = 0;
+    }
+    fill(c);
+    ellipse(x, y, 40, 10);
+  }
+}
