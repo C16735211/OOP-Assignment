@@ -11,6 +11,8 @@ import processing.sound.*;
 ControlP5 cp5;
 
 int myColorBackground = color(0, 0, 0);
+//Ship[] ships = new Ship[3];
+ArrayList shipCollection;
 Star[] stars = new Star[800];
 Planet sun;
 
@@ -29,7 +31,7 @@ void setup()
 {
   size(700, 700, P3D);
   minim = new Minim(this);
-  player = minim.loadFile("halo.wav");
+  player = minim.loadFile("MasterChief.wav");
   player.play();
   chief = loadImage("chief.jpg");
   sunTexture = loadImage("sun.jpg");
@@ -47,6 +49,21 @@ void setup()
   {
     stars[i] = new Star();
   }
+
+  shipCollection = new ArrayList();
+
+  for (int i = 0; i < 5; i++)
+  {
+    Ship myShip = new Ship(random(0, width), random(0, 200), 255);
+    shipCollection.add(myShip);
+  }
+
+  /* ships
+   for (int i = 0; i < ships.length; i++)
+   {
+   ships[i] = new Ship(20, random(height), #0AA8F5);
+   }
+   */
 
   cp5 = new ControlP5(this);
 
@@ -108,6 +125,23 @@ void draw()
     pointLight(255, 255, 255, -100, 100, z);
   }
 
+  // --- TO GENERATE A NEW SHIP EACH FRAME CHANGE ---
+  //Ship myShip = new Ship(random(0,width),random(0,height),255);
+  //shipCollection.add(myShip);
+
+  for (int i = 0; i < shipCollection.size(); i++)
+  {
+    Ship myShip = (Ship) shipCollection.get(i);
+    myShip.move(1);
+    //myS.move(1);
+  }
+  /*
+  for (int i = 0; i < ships.length; i++)
+   {
+   ships[i].move(i);
+   }
+   */
+
   for (int i = 0; i < stars.length; i++)
   {
     stars[i].update();
@@ -139,22 +173,40 @@ void keyPressed()
     r1.activate(4); 
     break;
   }
-  
+
   switch(key)
   {
-    case 'q':
-      player = minim.loadFile("fire.wav");
-      player.play();
-      break;
+  case 'q':
+    player = minim.loadFile("fire.wav");
+    player.play();
+    break;
 
+
+  case 'p':
+    player = minim.loadFile("space.wav");
+    player.play();
+    break;
+
+  case 'z':
+    player = minim.loadFile("battle.wav");
+    player.play();
+    break;
+
+  case 'l':
+    player = minim.loadFile("alien.wav");
+    player.play();
+    break;
+
+  case 'v':
+    player = minim.loadFile("halo.wav");
+    player.play();
+    break;
     
-    case 'p':
-      player = minim.loadFile("space.wav");
-      player.play();
-      break;
-    
+  case 'b':
+    player = minim.loadFile("MasterChief.wav");
+    player.play();
+    break;
   }
-  
 }
 
 void controlEvent(ControlEvent theEvent) 
@@ -191,14 +243,10 @@ void Submit()
 void mousePressed()
 {
   chief.filter(INVERT);
-  player = minim.loadFile("chief.wav");
-  player.play();
 }
 
 void mouseReleased()
 {
-   chief.filter(ERODE);
-  player = minim.loadFile("fire.wav");
-  player.play(3);
+  chief.filter(ERODE);
 }
 
