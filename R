@@ -1,5 +1,12 @@
+import ddf.minim.*;
+
+Minim minim;
+
+AudioPlayer player;
+
 import controlP5.*;
 import processing.sound.*;
+
 
 ControlP5 cp5;
 
@@ -8,7 +15,10 @@ Star[] stars = new Star[800];
 Planet sun;
 
 PImage sunTexture;
+PImage chief;
 PImage[] textures = new PImage[3];
+
+String text;
 
 float speed;
 
@@ -17,7 +27,11 @@ RadioButton r1, r2, r3;
 
 void setup()
 {
-  size(700, 500, P3D);
+  size(700, 700, P3D);
+  minim = new Minim(this);
+  player = minim.loadFile("halo.wav");
+  player.play();
+  chief = loadImage("chief.jpg");
   sunTexture = loadImage("sun.jpg");
   textures[0] = loadImage("earth.jpg");
   textures[1] = loadImage("mars.jpg");
@@ -27,7 +41,7 @@ void setup()
   sun = new Planet(50, 0, 0, sunTexture);
   sun.spawnMoons(4, 1);
 
-  radar1 = new Radar(100, 400, 50, 0.5, color(255, 0, 0));
+  radar1 = new Radar(100, 600, 50, 0.5, color(255, 0, 0));
 
   for (int i = 0; i < stars.length; i++)
   {
@@ -36,19 +50,29 @@ void setup()
 
   cp5 = new ControlP5(this);
 
+  cp5.addTextfield("a").setPosition(300, 550).setSize(100, 25).setAutoClear(false);
+
+  cp5.addBang("Submit").setPosition(400, 550).setSize(100, 25);
+
+  cp5.addKnob("Hover Control")
+    .setRange(0, 500)
+    .setValue(0)
+    .setPosition(600, 500)
+    .setSize(50, 50);
+
   r1 = cp5.addRadioButton("radioButton")
-    .setPosition(200, 400)
+    .setPosition(200, 600)
     .setSize(40, 20)
     .setColorForeground(color(120))
     .setColorActive(color(255))
     .setColorLabel(color(255))
     .setItemsPerRow(5)
     .setSpacingColumn(50)
-    .addItem("10", 1)
-    .addItem("20", 2)
-    .addItem("30", 3)
-    .addItem("40", 4)
-    .addItem("50", 5)
+    .addItem("50", 1)
+    .addItem("100", 2)
+    .addItem("150", 3)
+    .addItem("200", 4)
+    .addItem("250", 5)
     ;
 
   for (Toggle t : r1.getItems()) 
@@ -67,8 +91,12 @@ void draw()
 {
   speed = map(mouseX, 0, width, 0, 50);
   background(myColorBackground);
+
   radar1.render();
   radar1.update();
+
+  image(chief, 500, 20);
+  ellipse(400, 650, player.left.get(1)*800, 50);
 
   int z = 100;
   for (int i = 0; i < 2; i++)
@@ -111,6 +139,22 @@ void keyPressed()
     r1.activate(4); 
     break;
   }
+  
+  switch(key)
+  {
+    case 'q':
+      player = minim.loadFile("fire.wav");
+      player.play();
+      break;
+
+    
+    case 'p':
+      player = minim.loadFile("space.wav");
+      player.play();
+      break;
+    
+  }
+  
 }
 
 void controlEvent(ControlEvent theEvent) 
@@ -124,8 +168,37 @@ void controlEvent(ControlEvent theEvent)
     println("\t "+theEvent.getValue());
     myColorBackground = color(int(theEvent.getGroup().getValue()*50), 0, 0);
   }
+
+  // changing the value of numberbox1 turns knob1
+  if (theEvent.getController().getName()=="numberbox1") {
+    cp5.getController("knob1").setValue(theEvent.getController().getValue());
+  }
 }
 
 void radioButton(int a) {
   println("a radio Button event: "+a);
 }
+
+void Submit()
+{
+  println();
+  print("this is the text you typed :");
+  text = cp5.get(Textfield.class, "a").getText();
+
+  print(text);
+}
+
+void mousePressed()
+{
+  chief.filter(INVERT);
+  player = minim.loadFile("chief.wav");
+  player.play();
+}
+
+void mouseReleased()
+{
+   chief.filter(ERODE);
+  player = minim.loadFile("fire.wav");
+  player.play(3);
+}
+
