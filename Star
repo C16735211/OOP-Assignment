@@ -1,3 +1,5 @@
+// star class for the star field
+
 class Star
 {
   float x;
