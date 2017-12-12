@@ -19,9 +19,9 @@ WaveGraph wave1;
 
 // amount of arcs
 int count = 25;
-Orbiter[] orbiters = new Orbiter[count];
+Orbiter[] orbiters = new Orbiter[count];   // orbiter to rotate on top of the radar
 
-PImage sunTexture;
+PImage sunTexture; // textures that wrap around the sun and the planets
 PImage chief;
 PImage[] textures = new PImage[3];
 
@@ -57,16 +57,19 @@ void setup()
     stars[i] = new Star();
   }
 
+  // spaceship collection in arraylist
   shipCollection = new ArrayList();
 
-  for (int i = 0; i < 5; i++)
+  // 10 spaceships
+  for (int i = 0; i < 10; i++)
   {
     Ship myShip = new Ship(random(0, width), random(0, 200), 255);
     shipCollection.add(myShip);
   }
 
-  //for orbiter circles -> makes sure radii are evenly divided across the screen
+  // makes sure orbital circles are evenly divided across the screen
   float radDiv = min(width, height);
+  
   //array to initialise the array of orbiter variables
   for (int i = 1; i<=orbiters.length; i++) 
   {
@@ -75,7 +78,7 @@ void setup()
     orbiters[i - 1] = o;
   }
 
-  /* ships
+  /* ships 
    for (int i = 0; i < ships.length; i++)
    {
    ships[i] = new Ship(20, random(height), #0AA8F5);
@@ -84,16 +87,19 @@ void setup()
 
   cp5 = new ControlP5(this);
 
+  // command center button to take requests and prints to console
   cp5.addTextfield("Enter command").setPosition(300, 550).setSize(100, 25).setAutoClear(false);
 
   cp5.addBang("Enter").setPosition(400, 550).setSize(100, 25);
 
+  // activate hover control
   cp5.addKnob("Hover Control")
     .setRange(0, 500)
     .setValue(0)
     .setPosition(600, 500)
     .setSize(50, 50);
 
+  // changes colors when pressed
   r1 = cp5.addRadioButton("radioButton")
     .setPosition(200, 600)
     .setSize(40, 20)
