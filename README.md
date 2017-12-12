@@ -15,8 +15,8 @@ move the mouse across screen to the right the stars speed up giving you the feel
 
 The planet class uses PVectors and PShapes and nicely displays the planets as spheres. They are positioned in the topleft corner of the screen they randomly select the planet texture each time the program is run. Example there could be two earths, mercurys etc. I had them at first in the center and used the function peasyCam which enabled you to zoom around the galaxy. However I couldn't get it to fully functioning to how I would like so I removed it. The planet class enables the orbitspeed, size and rotation of the planets, moons and the sun. I used PImage to import the wrap around textures of the planets, sun and moon.
 
-**  Sound frequency that changes/vibrates using the AudioPlayer player; // to activate audio frequency**
-** ellipse(400, 650, player.left.get(1)*800, 50); **
+**Sound frequency that changes/vibrates using the AudioPlayer player; // to activate audio frequency**
+**ellipse(400, 650, player.left.get(1)*800, 50);**
 
 The ellipse vibrates when the sound is played, you can use lines, or any shapes to implement this. On this occassion I used an ellipse.
 
@@ -34,7 +34,7 @@ The ship class creates space ships limited to an arraylist of 4 for demo purpose
 
 **Radar class**
 
-The radar class is positioned to the bottom left corner it works with the orbiter class. 
+The radar class is positioned to the bottom left corner it works with the orbiter class. The orbiter is displayed like a portal to activate cortana. 
 
 
 
