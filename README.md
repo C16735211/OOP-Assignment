@@ -1,6 +1,10 @@
 # OOP-Assignment
 
-#H1 Assignment-1 O.O.P DT228/2
+# H1 Assignment-1 O.O.P DT228/2
+
+**R**
+
+Main page includes the controlP5 and minim libraries as well as the sound AudioPlayer functions that are needed to import the required libraries that enable the program to function and display. PImages, radio buttons, radar interactions need these libraries to display the content and sound of all files and images. Variable, arrays, images and buttons are all declared and initialised on the R file page. Where the functions draw and setup enable the program to work. 
 
 **Star class**
 
@@ -30,7 +34,7 @@ The ship class creates space ships limited to an arraylist of 4 for demo purpose
 
 **Radar class**
 
-The radar class is positioned to the bottom left corner it works with the orbiter class.
+The radar class is positioned to the bottom left corner it works with the orbiter class. 
 
 
 
