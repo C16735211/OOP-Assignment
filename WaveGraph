@@ -1,3 +1,5 @@
+// Wave class that displays an incoming danger alert field that gets activated if enemys are approaching
+
 class WaveGraph
 {  
   int xspacing = 1;//space between ellipses that make the graph
@@ -40,7 +42,8 @@ class WaveGraph
     }
   }
 
-  void displayWave() {
+  void displayWave() 
+  {
     //speed up graph if mouse is in danger box
     if (mouseY>((height/8)*5.75)&& mouseY<(height/8*5.75)+30)
     {
@@ -53,7 +56,7 @@ class WaveGraph
       fill(color(random(50, 250), random(50, 100), random(200, 250)));
       text("DANGER", width/5, 30);
     } 
-    //normal calm sine wave
+    //normal calm sine wave when area is safe from the enemy
     else
     {
 
