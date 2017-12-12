@@ -1,3 +1,5 @@
+// planet class that creates and displays the planets in 3d
+
 class Planet
 {
   float radius;
@@ -7,9 +9,10 @@ class Planet
   float orbitspeed;
   PVector v;
   
+  // pshape to create spheres
   PShape globe;
   
-
+  // planet constructor that creates the planets, distance and speed
   Planet(float r, float d, float o, PImage img)
   {
     v = PVector.random3D();
@@ -25,6 +28,7 @@ class Planet
     globe.setTexture(img);
   }
 
+  // speed and direction of the rotating planets
   void orbit()
   {
     angle = angle + orbitspeed;
@@ -37,6 +41,7 @@ class Planet
     }
   }
 
+ // number of moons that spawn when run to create more increase the level
   void spawnMoons(int total, int level)
   {
     planets = new Planet[total];
@@ -55,6 +60,7 @@ class Planet
     }
   }
 
+  // Display function 
   void display()
   {
     pushMatrix();
