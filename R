@@ -1,3 +1,9 @@
+//  C16735211 
+//  Darren Byrne
+//  DT228/2
+//  Halo - Master Chief HUD
+//  12-12-2017
+
 import ddf.minim.*; // sound library
 
 Minim minim; // declare new minim
@@ -129,6 +135,7 @@ Radar radar1;
 
 void draw()
 {
+  // activate speed of stars when moved across the screen
   speed = map(mouseX, 0, width, 0, 50);
   background(myColorBackground);
 
@@ -181,6 +188,7 @@ void draw()
   }
 }
 
+// switch case for changing colors
 void keyPressed() 
 {
   switch(key) {
@@ -203,7 +211,8 @@ void keyPressed()
     r1.activate(4); 
     break;
   }
-
+  
+// switch case for playing sounds from halo through the keyboard
   switch(key)
   {
   case 'q':
