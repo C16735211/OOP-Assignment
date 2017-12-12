@@ -1,10 +1,10 @@
 import ddf.minim.*; // sound library
 
-Minim minim;
+Minim minim; // declare new minim
 
-AudioPlayer player;
+AudioPlayer player; // to activate audio
 
-import controlP5.*;
+import controlP5.*;        // import library to create button to interact
 import processing.sound.*;
 
 
